@@ -1,0 +1,30 @@
+scalar Date
+
+type Query {
+  boards: [Board]
+  boardTotalCount: Int
+  boardByPage(page: Int): [Board]
+  boardByNumber(boardNumber: Int): Board
+}
+
+type Mutation {
+  createBoard(createBoardInput: CreateBoardInput): Board
+  updateBoard(createBoardInput: CreateBoardInput): Board
+  deleteBoard(boardNumber: Int!, password: Int!): Boolean
+}
+
+type Board {
+  boardNumber: Int
+  title: String
+  content: String
+  date: Date
+  password: String
+}
+
+input CreateBoardInput {
+  boardNumber: Int!
+  title: String!
+  content: String!
+  date: Date
+  password: Int!
+}
