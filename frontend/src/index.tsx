@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Router from './router/Router';
+import MainLayout from './components/MainLayout';
+import './assets/css/font.css';
 
 const rootElement = document.getElementById('root');
 
-ReactDOM.render(<Router />, rootElement);
+ReactDOM.render(<MainLayout />, rootElement);

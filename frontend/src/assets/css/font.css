@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'InfinitySansWMReg';
+  src: url('../fonts/InfinitySansWMR-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'InfinitySansWMBold';
+  src: url('../fonts/InfinitySansWM-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'InfinitySansReg';
+  src: url('../fonts/InfinitySansR-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'InfinitySansBold';
+  src: url('../fonts/InfinitySans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'InfinitySansCBold';
+  src: url('../fonts/InfinitySans-CondBold.ttf');
+}
