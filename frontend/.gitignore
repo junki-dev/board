@@ -8,3 +8,6 @@
 
 # production
 /build
+
+# yarn log
+yarn-error.log
