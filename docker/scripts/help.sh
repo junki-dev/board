@@ -22,8 +22,8 @@ function printHelp() {
     println "  Starting Board system..."
     println
     println "    Flags:"
-    println "    -db   Star mongodb docker service"
-    println "    -node Start meidum explorer service(depends on mongodb)"
+    println "    -db   Start board mongodb docker service"
+    println "    -node Start board service(depends on mongodb)"
     println    
     println " Possible Command and flag combinations"
     println "   \033[0;32m./board.sh\033[0m start"

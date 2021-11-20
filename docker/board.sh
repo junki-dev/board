@@ -12,7 +12,7 @@
 ## default docker-compose file
 COMPOSE_FILE="docker-compose.yaml"
 ## docker service
-SERVICES="explorer"
+SERVICES="board"
 
 # 시스템 구동
 function systemStart() {
@@ -61,10 +61,10 @@ while [[ $# -ge 1 ]] ; do
     exit 0
     ;;
   -db )
-    SERVICES="mongodb"
+    SERVICES="board_mongodb"
     ;;
   -node )
-    SERVICES="explorer"
+    SERVICES="board"
     ;;
   * )
     errorln "Unknown flag: $key"
