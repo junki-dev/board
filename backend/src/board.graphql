@@ -9,8 +9,8 @@ type Query {
 
 type Mutation {
   createBoard(createBoardInput: CreateBoardInput): Board
-  updateBoard(createBoardInput: CreateBoardInput): Board
-  deleteBoard(boardNumber: Int!, password: Int!): Boolean
+  updateBoard(createBoardInput: CreateBoardInput): Boolean
+  deleteBoard(boardNumber: Int!, password: String!): Boolean
 }
 
 type Board {
