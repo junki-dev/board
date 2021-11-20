@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { join } from 'path';
@@ -13,6 +14,9 @@ import { BoardModule } from './board/board.module';
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000),
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
     }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
