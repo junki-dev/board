@@ -11,7 +11,7 @@ const Title = styled.a`
   font-size: 42px;
   color: #75cb5d;
   margin-bottom: 12px;
-  font-family: 'InfinitySansCBold';
+  font-family: 'InfinitySansBold';
   text-decoration: underline;
   text-decoration-color: #4caf50;
 `;

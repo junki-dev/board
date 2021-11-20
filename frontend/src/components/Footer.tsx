@@ -10,7 +10,7 @@ const FooterContainer = styled.footer`
 const FooterTitle = styled.p`
   text-align: center;
   font-size: 18px;
-  font-family: 'InfinitySansCBold';
+  font-family: 'InfinitySansBold';
 `;
 
 const FooterContent = styled.p`

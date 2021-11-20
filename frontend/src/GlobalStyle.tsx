@@ -11,6 +11,7 @@ const GlobalCSS = css`
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
+    font-family: 'InfinitySansReg';
   }
   body,
   html {
