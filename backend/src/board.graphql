@@ -22,9 +22,9 @@ type Board {
 }
 
 input CreateBoardInput {
-  boardNumber: Int!
+  boardNumber: Int
   title: String!
   content: String!
   date: Date
-  password: Int!
+  password: String!
 }

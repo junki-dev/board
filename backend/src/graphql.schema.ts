@@ -8,11 +8,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export class CreateBoardInput {
-    boardNumber: number;
+    boardNumber?: Nullable<number>;
     title: string;
     content: string;
     date?: Nullable<Date>;
-    password: number;
+    password: string;
 }
 
 export abstract class IQuery {
