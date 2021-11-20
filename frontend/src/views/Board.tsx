@@ -34,7 +34,6 @@ const TableHeader = styled.thead`
 // Board 테이블 Body
 const TableBody = styled.tbody`
   font-size: 15px;
-  font-family: 'InfinitySansReg';
 
   td {
     padding: 13px 2px;

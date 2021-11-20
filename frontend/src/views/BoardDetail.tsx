@@ -30,7 +30,6 @@ const DetailContent = styled.div`
 
   p {
     font-size: 16px;
-    font-family: 'InfinitySansReg';
   }
 `;
 
