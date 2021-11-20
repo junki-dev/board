@@ -10,7 +10,8 @@ import { BoardModule } from './board/board.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: process.env.NODE_ENV === `dev` ? '.env.dev' : '.env.test',
+      envFilePath:
+        process.env.NODE_ENV === `dev` ? '.env.dev' : process.env.NODE_ENV === `local` ? '.env.local' : '.env.prod',
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000),
       }),
