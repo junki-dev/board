@@ -28,9 +28,9 @@ export abstract class IQuery {
 export abstract class IMutation {
     abstract createBoard(createBoardInput?: Nullable<CreateBoardInput>): Nullable<Board> | Promise<Nullable<Board>>;
 
-    abstract updateBoard(createBoardInput?: Nullable<CreateBoardInput>): Nullable<Board> | Promise<Nullable<Board>>;
+    abstract updateBoard(createBoardInput?: Nullable<CreateBoardInput>): Nullable<boolean> | Promise<Nullable<boolean>>;
 
-    abstract deleteBoard(boardNumber: number, password: number): Nullable<boolean> | Promise<Nullable<boolean>>;
+    abstract deleteBoard(boardNumber: number, password: string): Nullable<boolean> | Promise<Nullable<boolean>>;
 }
 
 export class Board {
