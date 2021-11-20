@@ -13,3 +13,6 @@ COPY . .
 
 # page 설치
 RUN yarn install
+
+# build
+RUN yarn build
