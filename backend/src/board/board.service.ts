@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Exclusion, MongoRepository } from 'typeorm';
+import { MongoRepository } from 'typeorm';
 import { BoardEntity } from './board.entity';
-import { BoardInputInterface, BoardInterface } from './interfaces/board.interface';
+import { BoardInterface } from './interfaces/board.interface';
 import { createHmac } from 'crypto';
 import { BaseExceptionFilter } from '@nestjs/core';
 
@@ -34,6 +34,15 @@ export class BoardService {
   }
 
   /**
+   * 최신 글 조회
+   * @returns {BoardEntity} 최신 글
+   */
+  findLatestBoard(): Promise<BoardEntity> {
+    this.logger.log(`findLatestBoard()`);
+    return this.boardRepository.findOne({ order: { boardNumber: 'DESC' } });
+  }
+
+  /**
    * 페이지 별 게시글 목록 조회
    * @returns {BoardEntity[]} 게시글 목록 데이터
    */
@@ -58,28 +67,29 @@ export class BoardService {
 
   /**
    * 게시글 등록
-   * @param {BoardInputInterface} input 게시글 입력 데이터
+   * @param {BoardInterface} input 게시글 입력 데이터
    * @returns {BoardEntity} 저장된 게시글 데이터
    */
-  create(input: BoardInputInterface): Promise<BoardEntity> {
+  async create(input: BoardInterface): Promise<BoardEntity> {
     this.logger.log(`create()`);
-    const hash = createHmac('sha256', input.password.toString()).digest('hex'); // password hassing
+    const latestBoard: BoardEntity = await this.findLatestBoard();
+    const hash = createHmac('sha256', input.password).digest('hex'); // password hassing
     const date = input.date || new Date(); // 날짜값이 비어 있을 경우, 현재 시간으로 입력
 
-    let newInput: BoardInterface = { ...input, password: hash, date: date };
+    let newInput: BoardInterface = { ...input, boardNumber: latestBoard.boardNumber + 1, password: hash, date: date };
     return this.boardRepository.save(newInput);
   }
 
   /**
    * 게시글 수정
-   * @param {BoardInputInterface} input 게시글 수정 데이터
+   * @param {BoardInterface} input 게시글 수정 데이터
    * @returns
    */
-  async update(input: BoardInputInterface): Promise<any> {
+  async update(input: BoardInterface): Promise<any> {
     try {
       this.logger.log(`update()`);
       const board = await this.findBoardByNumber(input.boardNumber);
-      const hash = createHmac('sha256', input.password.toString()).digest('hex'); // password hassing
+      const hash = createHmac('sha256', input.password).digest('hex'); // password hassing
 
       if (board.password !== hash) {
         throw new BaseExceptionFilter();
@@ -89,7 +99,7 @@ export class BoardService {
 
       return this.boardRepository.updateOne(
         { boardNumber: input.boardNumber },
-        { $set: { title: 'test', content: 'content' } },
+        { $set: { title: input.title, content: input.content } },
       );
     } catch (error) {
       this.logger.error(error);
@@ -101,11 +111,11 @@ export class BoardService {
    * @param {BoardInputInterface} input 게시글 수정 데이터
    * @returns {Boolean} 성공 여부
    */
-  async delete(boardNumber: number, password: number): Promise<Boolean> {
+  async delete(boardNumber: number, password: string): Promise<Boolean> {
     try {
       this.logger.log(`delete()`);
       const board = await this.findBoardByNumber(boardNumber);
-      const hash = createHmac('sha256', password.toString()).digest('hex'); // password hassing
+      const hash = createHmac('sha256', password).digest('hex'); // password hassing
 
       if (board.password !== hash) {
         throw new BaseExceptionFilter();

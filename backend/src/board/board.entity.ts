@@ -12,7 +12,7 @@ export class BoardEntity {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ default: `` })
   content: string;
 
   @Column()
