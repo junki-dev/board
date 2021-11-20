@@ -19,6 +19,27 @@ const GlobalCSS = css`
     margin: 0 auto;
     background: #e0ded8;
   }
+
+  .fill-button {
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-family: 'InfinitySansBold';
+    display: inline-block;
+    float: right;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #e0ded8;
+    color: black;
+    border: 2px solid #9e9a9a;
+    :hover {
+      background-color: #4caf50;
+      color: white;
+    }
+  }
 `;
 
 const GlobalStyleComponent = createGlobalStyle`${GlobalCSS}`;
