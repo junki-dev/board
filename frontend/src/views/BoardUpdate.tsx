@@ -137,7 +137,7 @@ const BoardUpdate = () => {
 
   return (
     <UpdateContainer>
-      <PageTitle>Register/Update</PageTitle>
+      <PageTitle>{boardNumber > 0 ? `REGISTER` : `UPDATE`}</PageTitle>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <TitleContainer>
           <Label>TITLE</Label>
