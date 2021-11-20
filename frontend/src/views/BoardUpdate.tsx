@@ -144,9 +144,9 @@ const BoardUpdate = () => {
           <Input
             type="text"
             defaultValue={board && board.title}
-            {...register('title', { required: true, maxLength: 30 })}
+            {...register('title', { required: true, maxLength: 250 })}
           />
-          {errors.title && errors.title.type === 'maxLength' && <ErrorMsg>Max length exceeded(MAX: 30)</ErrorMsg>}
+          {errors.title && errors.title.type === 'maxLength' && <ErrorMsg>Max length exceeded(MAX: 250)</ErrorMsg>}
         </TitleContainer>
         <div>
           <Label>CONTENT</Label>
