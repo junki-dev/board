@@ -50,19 +50,27 @@ interface BoardData {
   board: Board;
 }
 
+interface DeleteBoardInput {
+  deleteBoard: boolean;
+}
+
 const BoardDetail = () => {
   const { id } = useParams(); // 게시글 번호 파라미터
   const boardNumber = id ? parseInt(id) : 0; // 게시글 번호 초기화
   const [password, setPassword] = useState(``); // 비밀번호
-  const { data } = useQuery<BoardData>(QUERY_BOARD, { variables: { boardNumber: boardNumber } }); // 게시글 번호로 게시글 데이터 조회
-  const [deleteBoard] = useMutation(DELETE_BOARD); // 게시글 삭제
+  const queryBoardData = useQuery<BoardData>(QUERY_BOARD, { variables: { boardNumber: boardNumber } }).data; // 게시글 번호로 게시글 데이터 조회
+  const [deleteBoard] = useMutation<DeleteBoardInput>(DELETE_BOARD); // 게시글 삭제
 
   const handleDeleteItem = async (response: boolean) => {
     if (response) {
       await deleteBoard({ variables: { boardNumber: boardNumber, password: password } })
-        .then(() => {
-          alert(`삭제 되었습니다.`);
-          window.location.href = '/';
+        .then(({ data }) => {
+          if (data && data.deleteBoard === false) {
+            alert(`비밀번호가 틀렸습니다.`);
+          } else {
+            alert(`삭제 되었습니다.`);
+            window.location.href = '/';
+          }
         })
         .catch((error) => {
           alert(`삭제에 실패했습니다. \n ${error}`);
@@ -84,11 +92,11 @@ const BoardDetail = () => {
       <DetailContent>
         <TitleContainer>
           <Label>TITLE</Label>
-          <p>{data?.board.title}</p>
+          <p>{queryBoardData?.board.title}</p>
         </TitleContainer>
         <div>
           <Label>CONTENT</Label>
-          <div dangerouslySetInnerHTML={{ __html: `${data?.board.content}` }} />
+          <div dangerouslySetInnerHTML={{ __html: `${queryBoardData?.board.content}` }} />
         </div>
 
         <Link to="/" className="fill-button">

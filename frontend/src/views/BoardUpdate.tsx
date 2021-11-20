@@ -112,9 +112,6 @@ const BoardUpdate = () => {
 
       updateBoard({ variables: { createBoardInput: newCreateBoard } })
         .then(({ data }) => {
-          console.log(data);
-          console.log(data?.updateBoard);
-
           if (data && data.updateBoard === false) {
             alert(`비밀번호가 틀렸습니다.`);
           } else {
@@ -175,6 +172,7 @@ const BoardUpdate = () => {
             onEditorChange={handleEditorChange}
             outputFormat="html"
           />
+          <Label>PASSWORD</Label>
           <Input type="number" {...register('password', { required: true, maxLength: 4 })} />
           {errors.password && errors.password.type === 'maxLength' && <ErrorMsg>Max length exceeded(MAX: 4)</ErrorMsg>}
         </div>
