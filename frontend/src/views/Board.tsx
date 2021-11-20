@@ -1,34 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
+import Pagination from '../components/Pagination';
+import { Boards, Board } from '../types/Board';
 
+// Board 최상위 태그
 const BoardContainer = styled.div`
   width: 1180px;
 `;
 
-const RegisterButton = styled(Link)`
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  font-family: 'InfinitySansBold';
-  display: inline-block;
-  float: right;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  background-color: #e0ded8;
-  color: black;
-  border: 2px solid #9e9a9a;
-
-  :hover {
-    background-color: #4caf50;
-    color: white;
-  }
-`;
-
+// Board 목록 테이블
 const TableContainer = styled.table`
   width: 100%;
   overflow: hidden;
@@ -36,6 +20,7 @@ const TableContainer = styled.table`
   text-align: center;
 `;
 
+// Board 테이블 Header
 const TableHeader = styled.thead`
   font-size: 18px;
   font-family: 'InfinitySansBold';
@@ -46,6 +31,7 @@ const TableHeader = styled.thead`
   }
 `;
 
+// Board 테이블 Body
 const TableBody = styled.tbody`
   font-size: 15px;
   font-family: 'InfinitySansReg';
@@ -55,45 +41,70 @@ const TableBody = styled.tbody`
   }
 `;
 
-const LinkItem = styled(Link)`
-  text-decoration: none;
-  color: black;
-
+// Board 테이블 내 Item
+const TableItem = styled.tr`
   :hover {
+    cursor: pointer;
     color: #75cb5d;
   }
 `;
 
-const Board = () => {
+const BoardView = () => {
+  const [boards, setBoards] = useState<Board[]>([]); // 게시글 데이터
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const [totalCount, setTotalCount] = useState(0); // 페이지 전체 개수
+  const { data } = useQuery<Boards>(QUERY_BOARDS, { variables: { page: currentPage } }); // 게시글 목록 조회
+
+  const handleCurrentPage = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    if (!!boards && data && data.boards.length > 0) {
+      setBoards(data.boards);
+      setTotalCount(data.boardTotalCount || 0);
+    }
+  }, [data, boards]);
+
   return (
     <BoardContainer>
-      <RegisterButton to="/update/new">글쓰기</RegisterButton>
+      <Link to="/update/new" className="fill-button">
+        글쓰기
+      </Link>
       <TableContainer>
         <TableHeader>
           <tr>
             <th>NO.</th>
             <th>Title</th>
-            <th>Contents</th>
             <th>Date</th>
           </tr>
         </TableHeader>
         <TableBody>
-          <tr>
-            <td>
-              <LinkItem to={`/detail/1`}>1</LinkItem>
-            </td>
-            <td>
-              <LinkItem to={`/detail/1`}>제목</LinkItem>
-            </td>
-            <td>
-              <LinkItem to={`/detail/1`}>내용</LinkItem>
-            </td>
-            <td>2021.11.19</td>
-          </tr>
+          {boards &&
+            boards.map((item: Board) => (
+              <TableItem key={item.boardNumber} onClick={() => (window.location.href = `/detail/${item.boardNumber}`)}>
+                <td>{item.boardNumber}</td>
+                <td>{item.title}</td>
+                <td>{dayjs(item.date).format(`YYYY.MM.DD`)}</td>
+              </TableItem>
+            ))}
         </TableBody>
       </TableContainer>
+      <Pagination totalCount={totalCount} handleCurrentPage={handleCurrentPage} />
     </BoardContainer>
   );
 };
 
-export default Board;
+// Board 목록 조회
+const QUERY_BOARDS = gql`
+  query Boards($page: Int!) {
+    boards: boardByPage(page: $page) {
+      boardNumber
+      title
+      date
+    }
+    boardTotalCount
+  }
+`;
+
+export default BoardView;
