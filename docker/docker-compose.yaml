@@ -28,7 +28,7 @@ services:
       - board-network
 
   board:
-    image: board:0.02
+    image: board:1.0
     container_name: board
     restart: unless-stopped
     logging:
@@ -42,7 +42,7 @@ services:
       - ./../frontend/build:/usr/src/client
     ports:
       - 80:3000
-    command: yarn start:dev
+    command: yarn start
     depends_on:
       - board_mongodb
     networks:
