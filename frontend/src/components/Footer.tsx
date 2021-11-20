@@ -7,16 +7,23 @@ const FooterContainer = styled.footer`
   padding: 12px 0;
 `;
 
+const FooterTitle = styled.p`
+  text-align: center;
+  font-size: 18px;
+  font-family: 'InfinitySansCBold';
+`;
+
 const FooterContent = styled.p`
   text-align: center;
   font-size: 14px;
-  font-family: 'InfinitySansCBold';
 `;
 
 const Footer = () => {
   return (
     <FooterContainer>
-      <FooterContent>CONTACT ME</FooterContent>
+      <FooterTitle>CONTACT ME</FooterTitle>
+      <FooterContent>EMAIL | kjgcde@gmail.com</FooterContent>
+      <FooterContent>PHONE | 010.2326.771</FooterContent>
     </FooterContainer>
   );
 };
