@@ -132,6 +132,7 @@ const BoardUpdate = () => {
   useEffect(() => {
     if (id !== `new` && queryBoardData && !board) {
       setBoard(queryBoardData.board);
+      setContent(queryBoardData.board.content);
     }
   }, [id, queryBoardData, board, setBoard]);
 
