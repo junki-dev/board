@@ -41,6 +41,10 @@ const GlobalCSS = css`
       color: white;
     }
   }
+
+  .tox-notification {
+    display: none !important;
+  }
 `;
 
 const GlobalStyleComponent = createGlobalStyle`${GlobalCSS}`;
